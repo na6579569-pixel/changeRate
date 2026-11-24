@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=:.0" />
+    <title>Change Rate</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=swap_vert"
+    />
+  </head>
+  <style>
+    body{
+        width: 200px;
+        height: 500px;
+        background-color: azure;
+        margin: auto;
+    }
+    label{
+        display: block;
+        padding-bottom: 20px;
+    }
+    
+  </style>
+  <body>
+    <h1>Currency Converter💵</h1>
+    <label for="" >Amount</label>
+    <input type="number" id="amount"/>
+    <label for="">From Currency</label>
+    <select name="" id="fromCurrency">
+      <option value="us">US</option>
+      <option value="khm">Khm</option>
+      <option value="eur">EUR</option>
+    </select>
+    <button id="switchBtn" ><span  class="material-symbols-outlined"> swap_vert </span></button>
+    <label for="" >To Currency</label>
+    <select name="" id="toCurrency">
+      <option value="khm">Khm</option>
+      <option value="us">US</option>
+      <option value="eur">EUR</option>
+    </select>
+    <button id="convert">Convert</button>
+    <button id="reset">Reset</button>
+    <div id="error"></div>
+    <div id="result">Result will appear here</div>
+  </body>
+  <script>
+     // Exchange Rates (Practice Only)
+    // Base currency: USD
+
+    const rates={
+        us:1,
+        khm:4000,
+        eur :0.92,
+    };
+    // Select HTML Elements
+    const amount =document.getElementById("amount");
+    const fromCurrency =document.getElementById("fromCurrency");
+    const  toCurrency=document.getElementById("toCurrency");
+    const  convert=document.getElementById("convert");
+    const  reset=document.getElementById("reset");
+    const  error=document.getElementById("error");
+    const  result=document.getElementById("result");
+    const  switchBtn=document.getElementById("switchBtn");
+// check condition
+    convert.addEventListener("click", ()=>{
+        const value=Number(amount.value);
+        const from =fromCurrency.value;
+        const to =toCurrency.value;
+// if wrong it will not working stop by using (return)
+        if (amount.value.trim() == "" || !Number.isFinite(value) || value<=0){ // Number.isFinite() :វាជា Method របស់ Built-in Object Number។
+            error.innerHTML="Please enter a valid amount ";
+            result.innerHTML=" ";
+            return;
+        };
+// if it it will work this code that stay abow
+        error.innerHTML="";
+        const amountUs = value /rates[from];
+        const convertResult = amountUs * rates[to];
+
+        result.innerHTML=`${value} ${from} = ${convertResult.toLocaleString("en-US",{maximumSignificantDigits:2},)} ${to} `
+    });
+// switch
+    switchBtn.addEventListener("click", ()=>{
+        const teme=fromCurrency.value;
+        fromCurrency.value =toCurrency.value;
+        toCurrency.value =teme;
+        result.innerHTML="Currenties swap";
+        error.innerHTML="";
+        
+    });
+    reset.addEventListener("click",()=>{
+      amount.value="";
+      fromCurrency.value="us";
+      toCurrency.value="khm";
+      result.innerHTML="Result will appear here";
+      error.innerHTML=" ";
+
+    })
+
+
+  </script>
+</html>
